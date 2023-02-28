@@ -14,7 +14,10 @@ import (
 )
 
 func main() {
-	pwd, _ := os.Getwd()
+	pwd, err := os.Getwd()
+	if err != nil {
+		log.Printf("could not get current path: %v", err)
+	}
 	fileName := os.Getenv("GOFILE")
 
 	filePath := fmt.Sprint(pwd, "/", fileName)
