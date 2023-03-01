@@ -1,16 +1,20 @@
 package main
 
 import (
+	"bufio"
+	"bytes"
 	"fmt"
-	"github.com/panpito/momock/generator"
 	"go/ast"
+	"go/format"
 	"go/parser"
 	"go/printer"
 	"go/token"
-	"golang.org/x/tools/go/ast/astutil"
 	"log"
 	"os"
 	"strings"
+
+	"github.com/panpito/momock/generator"
+	"golang.org/x/tools/go/ast/astutil"
 )
 
 func main() {
@@ -63,6 +67,21 @@ func main() {
 	ast.SortImports(fset, &aMock)
 
 	mockFile := strings.ReplaceAll(filePath, ".go", "_mock.go")
-	f, _ := os.Create(mockFile)
-	printer.Fprint(f, fset, &aMock)
+	f, err := os.Create(mockFile)
+	if err != nil {
+		log.Printf("could not create mock file: %v", err)
+	}
+
+	var b bytes.Buffer
+	if err := printer.Fprint(bufio.NewWriter(&b), fset, &aMock); err != nil {
+		log.Printf("could not write mock: %v", err)
+	}
+
+	formattedFileBytes, err := format.Source(b.Bytes())
+	if err != nil {
+		log.Printf("could not format: %v", err)
+	}
+	if _, err := f.Write(formattedFileBytes); err != nil {
+		log.Printf("could not write formatted file: %v", err)
+	}
 }
