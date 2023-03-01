@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"bytes"
 	"fmt"
 	"go/ast"
@@ -73,7 +72,7 @@ func main() {
 	}
 
 	var b bytes.Buffer
-	if err := printer.Fprint(bufio.NewWriter(&b), fset, &aMock); err != nil {
+	if err := printer.Fprint(&b, fset, &aMock); err != nil {
 		log.Printf("could not write mock: %v", err)
 	}
 

@@ -2,7 +2,10 @@
 
 package playground
 
-import "context"
+import (
+	"context"
+	"fmt"
+)
 
 type SomeInterface interface {
 	Do(ctx context.Context, x string) (context.Context, error)
@@ -10,4 +13,8 @@ type SomeInterface interface {
 
 type AnotherOne interface {
 	Badu(x string)
+}
+
+func Chaos() {
+	fmt.Print("lol")
 }
