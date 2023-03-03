@@ -4,10 +4,10 @@ import (
 	"bytes"
 	"fmt"
 	"go/ast"
-	"go/format"
 	"go/parser"
 	"go/printer"
 	"go/token"
+	"golang.org/x/tools/imports"
 	"log"
 	"os"
 	"strings"
@@ -76,10 +76,11 @@ func main() {
 		log.Printf("could not write mock: %v", err)
 	}
 
-	formattedFileBytes, err := format.Source(b.Bytes())
+	formattedFileBytes, err := imports.Process(mockFile, b.Bytes(), &imports.Options{})
 	if err != nil {
 		log.Printf("could not format: %v", err)
 	}
+
 	if _, err := f.Write(formattedFileBytes); err != nil {
 		log.Printf("could not write formatted file: %v", err)
 	}

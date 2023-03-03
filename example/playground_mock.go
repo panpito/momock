@@ -2,10 +2,10 @@ package playground
 
 import (
 	"context"
-	"fmt"
-	"github.com/panpito/momock/manager"
 	"log"
 	"testing"
+
+	momock_manager "github.com/panpito/momock/manager"
 )
 
 type MockSomeInterface struct {
