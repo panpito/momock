@@ -1,3 +1,5 @@
+//go:build example
+
 //go:generate go run $GOPATH/src/momock/main.go
 
 package playground

@@ -6,6 +6,20 @@ Generating Go mocks for testing.
 
 ### Features / Roadmap
 
+| Feature                                             | Status             |
+|-----------------------------------------------------|--------------------|
+| Creating mock file                                  | :white_check_mark: |
+| Choosing mock file location                         | :x:                |
+| Choosing mock file package name                     | :x:                |
+| Choosing mock struct name                           | :x:                |
+| Assigning build tag                                 | :soon:             |
+| Choosing assertion framework                        | :x:                |
+| Matching statically typed arguments                 | :white_check_mark: |
+| Returning statically typed outputs                  | :white_check_mark: |
+| Matching multiple invocations                       | :white_check_mark: |
+| Erroring if expectations were set but not triggered | :soon:             |
+| Erroring if expectations were not set but triggered | :white_check_mark: |
+
 ## Usage
 
 Place that generate directive at the top of file containing the interface you want to generate a mock for:
@@ -27,6 +41,7 @@ Use native `generate` go command:
 ```shell
 go generate ./...
 ```
+It will generate a mock file (`*_mock.go`) alongside your interface file. Please do not modify it.
 
 Let's say you have a service using the previous interface:
 ```go
@@ -87,6 +102,12 @@ Not matching the arguments, will generate that error:
         Argument: 	1
         Got: 		GOODBYE
         Wanted: 	hello
+```
+
+Providing the wrong number of arguments, will generate that error:
+```go
+=== RUN   Test_WrongNumberOfArguments
+    manager.go:57: Wrong number of inputs
 ```
 
 ## Installation
