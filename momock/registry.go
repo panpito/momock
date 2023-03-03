@@ -1,4 +1,4 @@
-package momock_manager
+package momock
 
 import "errors"
 

@@ -1,6 +1,7 @@
 package momock_manager
 
 import (
+	"github.com/panpito/momock/momock"
 	"reflect"
 	"runtime"
 	"strings"
@@ -9,14 +10,14 @@ import (
 
 type MockManager struct {
 	t            *testing.T
-	mockRegister MockCallRegister
+	mockRegister momock.MockCallRegister
 }
 
 func NewMockManager(t *testing.T) *MockManager {
 	return &MockManager{t: t}
 }
 
-func (manager *MockManager) SetExpectations(mockCalls []MockCall) {
+func (manager *MockManager) SetExpectations(mockCalls []momock.MockCall) {
 	for _, mockCall := range mockCalls {
 		manager.mockRegister.Push(mockCall)
 	}
